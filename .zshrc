@@ -127,3 +127,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        source /etc/profile.d/vte.sh
+fi

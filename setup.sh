@@ -13,7 +13,7 @@ pacman_packages() {
         "python-pip"
         "alacritty"
         "yay"
-        "tmux"
+        "tilix"
         "xclip"
         
         #Neovim dependencies ========
@@ -38,6 +38,10 @@ aur_packages() {
         #Neovim dependencies ========
         "lazygit"
         "lazydocker"
+        "slack-desktop"
+        "zulip-desktop-bin"
+        "gitkraken"
+	"jetbrains-toolbox"
     )
     for pkg in ${packages[@]}; do
         echo "Installing ${pkg}"
