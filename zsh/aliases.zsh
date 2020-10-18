@@ -2,8 +2,6 @@ alias ca="conda activate"
 alias condd="conda deactivate"
 alias jn="jupyter notebook"
 alias jl="jupyter lab"
-unalias ls # get rid of oh-my-zsh alias
-alias ls="colorls"
 alias lc="colorls -lA --sd"
 
 # pacman aliases

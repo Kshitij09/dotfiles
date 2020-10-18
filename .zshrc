@@ -86,6 +86,8 @@ plugins=(git z zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
+unalias ls # get rid of oh-my-zsh alias
+alias ls="colorls"
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
