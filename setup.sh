@@ -15,6 +15,7 @@ pacman_packages() {
         "yay"
         "tilix"
         "xclip"
+	"ruby"
         
         #Neovim dependencies ========
         "neovim"
@@ -49,10 +50,21 @@ aur_packages() {
     done
 }
 
+install_gems(){
+		packages=(
+					"colorls"
+			)
+		for pkg in ${packages[@]}; do
+			echo -e "\nInstalling ${pkg}"
+			gem install $pkg
+		done
+}
+
 install_prerequisites() {
     echo -e "\n============== Installing pre-requisite packages ==============\n"
     pacman_packages
     aur_packages
+		install_gems
     echo -e "\nDone.\n"
 }
 

@@ -1,5 +1,7 @@
 [ -f $HOME/.config/zsh/conda.zsh ] && source $HOME/.config/zsh/conda.zsh
 [ -f $HOME/.config/zsh/aliases.zsh ] && source $HOME/.config/zsh/aliases.zsh
+
+source $(dirname $(gem which colorls))/tab_complete.sh
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -9,7 +11,8 @@ fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
+# Ruby gems bin
+path+=('/home/kshitij/.gem/ruby/2.7.0/bin')
 # Path to your oh-my-zsh installation.
 export ZSH="/home/kshitij/.oh-my-zsh"
 
