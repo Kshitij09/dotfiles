@@ -11,11 +11,10 @@ pacman_packages() {
         "wget"
         "zsh"
         "python-pip"
-        "alacritty"
         "yay"
         "tilix"
         "xclip"
-	"ruby"
+        "ruby"
         
         #Neovim dependencies ========
         "neovim"
@@ -42,7 +41,7 @@ aur_packages() {
         "slack-desktop"
         "zulip-desktop-bin"
         "gitkraken"
-	"jetbrains-toolbox"
+        "jetbrains-toolbox"
     )
     for pkg in ${packages[@]}; do
         echo "Installing ${pkg}"
@@ -51,20 +50,20 @@ aur_packages() {
 }
 
 install_gems(){
-		packages=(
-					"colorls"
-			)
-		for pkg in ${packages[@]}; do
-			echo -e "\nInstalling ${pkg}"
-			gem install $pkg
-		done
+    packages=(
+        "colorls"
+    )
+    for pkg in ${packages[@]}; do
+        echo -e "\nInstalling ${pkg}"
+        gem install $pkg
+    done
 }
 
 install_prerequisites() {
     echo -e "\n============== Installing pre-requisite packages ==============\n"
     pacman_packages
     aur_packages
-		install_gems
+    install_gems
     echo -e "\nDone.\n"
 }
 
@@ -81,7 +80,9 @@ install_ohmyzsh() {
     # Set zsh as default shell
     [ "$SHELL##*zsh*" ] && echo "zsh is already your default shell, moving on.." || chsh -s $(which zsh)
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    
+}
+
+install_post_omz() {
     echo -e "\n============== Installing powerlevel10k ==============\n"
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
     sed -i 's/^ZSH_THEME=.*/ZSH_THEME="powerlevel10k\/powerlevel10k"/g' ~/.zshrc
@@ -135,7 +136,7 @@ setup_conda(){
 }
 
 setup_git(){
-    echo -e "\n============== Setting up miniconda =============="
+    echo -e "\n============== Setting up global git =============="
     echo -e "\nNote: (These details will be used to signoff your commits)\n"
     read -p "\nName: " name
     read -p "\nEmail: " email
@@ -148,9 +149,11 @@ ask() {
     [ "$answer" == "${answer#[Yy]}" ]
 }
 
-# ask "Do you want to install MesloLGS Nf fonts (y/n)? " || install_meslo_fonts
-# install_prerequisites
-# install_ohmyzsh
-# setup_neovim
-# setup_conda
-# setup_git
+
+#install_prerequisites
+#install_ohmyzsh
+install_post_omz
+#ask "Do you want to install MesloLGS Nf fonts (y/n)? " || install_meslo_fonts
+#setup_neovim
+#setup_conda
+#setup_git
