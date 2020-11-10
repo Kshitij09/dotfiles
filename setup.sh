@@ -145,6 +145,37 @@ setup_git(){
     git config --global user.email "$email"
 }
 
+setup_kvm(){
+    #ref https://computingforgeeks.com/complete-installation-of-kvmqemu-and-virt-manager-on-arch-linux-and-manjaro/
+    # Install prerequisites
+    sudo pacman -S qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat --noconfirm --needed
+    # Install ebtables & iptables
+    sudo pacman -S ebtables iptables --noconfirm --needed
+    # Install libguestfs
+    sudo pacman -S libguestfs --noconfirm --needed
+    # Start and Enable libvirtd
+    sudo systemctl enable libvirtd.service
+    sudo systemctl start libvirtd.service
+    # Set the UNIX domain socket group ownership to libvirt
+    sudo sed -i 's/#unix_sock_group = .*/unix_sock_group = "libvirt"/g' /etc/libvirt/libvirtd.conf
+    sudo sed -i 's/#unix_sock_rw_perms = .*/unix_sock_rw_perms = "0770"/g' /etc/libvirt/libvirtd.conf
+    # Add your user account to libvirt group.
+    sudo usermod -a -G libvirt $(whoami)
+    newgrp libvirt
+    # Enable nested virtualization
+    ask "\nDo you want to enable nested virtualization (y/n)?" | enable_nested_virtualization
+    echo -e "\n==> Installing virt-manager"
+    paci virt-manager
+}
+
+enable_nested_virtualization() {
+    sudo modprobe -r kvm_intel
+    sudo modprobe kvm_intel nested=1
+    echo "options kvm-intel nested=1" | sudo tee /etc/modprobe.d/kvm-intel.conf
+    stat=`cat /sys/module/kvm_intel/parameters/nested`
+    [ "$stat" == ${stat#[Y]} ] || echo -e "Enabled Nested Virtualization successfully!"
+}
+
 ask() {
     read -ep "$1" answer
     [ "$answer" == "${answer#[Yy]}" ]
@@ -158,3 +189,4 @@ install_post_omz
 #setup_neovim
 #setup_conda
 #setup_git
+#ask "Do you want to setup KVM (y/n)?" || setup_kvm
