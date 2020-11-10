@@ -15,6 +15,7 @@ pacman_packages() {
         "tilix"
         "xclip"
         "ruby"
+        "github-cli"
         
         #Neovim dependencies ========
         "neovim"
